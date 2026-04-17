@@ -3,6 +3,8 @@
 This project implements an end-to-end data engineering pipeline using Azure services, starting with data ingestion from GitHub into SQL Server via Azure Data Factory. A main ADF pipeline then processes the data and loads it into Azure Data Lake Storage Gen2 (Bronze layer). The pipeline uses incremental loading with Lookup and Stored Procedure activities to ensure only new data is processed. Azure Databricks is used to transform the data from Bronze to Silver and then to Gold layers using Delta Lake. The Silver layer contains cleaned and structured data, while the Gold layer provides aggregated, business-ready insights. This architecture ensures scalability, efficiency, and production-level data processing.
 
 
-#🏗️ Architecture
+## Architecture
+
+GitHub → ADF → SQL Server → ADF → ADLS (Bronze) → Databricks → Silver → Gold
 
 ![architecture.png.png](https://github.com/satyamsingh201/Final_project_Batch_Data-Analytics/blob/main/images/architecture.png.png)
