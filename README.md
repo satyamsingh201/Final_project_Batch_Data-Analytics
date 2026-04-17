@@ -108,6 +108,89 @@ This pipeline implements a range-based incremental loading approach using a wate
 &nbsp;&nbsp;&nbsp;&nbsp;4.The filtered data is loaded into the target layer (Bronze in ADLS Gen2).<br>
 &nbsp;&nbsp;&nbsp;&nbsp;5.After successful execution, the pipeline updates the watermark table with the latest processed timestamp (current_load_time) for the next run.<br>
 
+---
+
+### 📊 Data Layers & Databricks Notebook Details
+The project follows the Medallion Architecture (Bronze, Silver, Gold) using Azure Databricks and Delta Lake for scalable data transformation.
+
+## 🟤 Bronze Layer (Raw Data)
+### 🎯 Purpose:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Store raw, unprocessed data exactly as ingested<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Act as a single source of truth<br>
+### ⚙️ Notebook Logic:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Read data from ADLS Gen2 Bronze container<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤No major transformations applied<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Preserve original schema and structure<br>
+
+### 🧪 Sample Code:<br>
+
+```py
+
+df = spark.read.format("csv").option("header", "true").load("/mnt/bronze/data/")
+df.write.format("delta").mode("overwrite").save("/mnt/bronze/delta/")
+
+```
+
+### 📌 Key Points:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Data is stored in Delta format<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Supports schema evolution<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Used for auditing and reprocessing<br>
+
+## ⚪ Silver Layer (Cleaned Data)<br>
+### 🎯 Purpose:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Clean and standardize the raw data<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Remove inconsistencies and duplicates<br>
+### ⚙️ Notebook Logic:<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Handle missing/null values<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Remove duplicates<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Convert data types<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Normalize column names<br>
+### 🧪 Sample Code:<br>
+
+```py
+
+df = spark.read.format("delta").load("/mnt/bronze/delta/")
+
+df = df.dropDuplicates()
+df = df.dropna()
+
+from pyspark.sql.functions import col
+df = df.withColumn("id", col("id").cast("int"))
+
+```
+
+df.write.format("delta").mode("overwrite").save("/mnt/silver/")
+### 📌 Key Points:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Data becomes clean and reliable<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Ready for further transformation<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Improves data quality<br>
+## 🟡 Gold Layer (Business-Level Data)
+### 🎯 Purpose:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Create analytics-ready datasets<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Apply business logic and aggregations<br>
+### ⚙️ Notebook Logic:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Perform aggregations (c<br>ount, sum, avg)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Create KPI-level tables<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Optimize for reporting<br>
+### 🧪 Sample Code:<br>
+
+```py
+
+df = spark.read.format("delta").load("/mnt/silver/")
+
+from pyspark.sql.functions import count
+
+gold_df = df.groupBy("category").agg(count("*").alias("total_count"))
+
+gold_df.write.format("delta").mode("overwrite").save("/mnt/gold/")
+
+```
+
+### 📌 Key Points:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Data is optimized for BI tools and reporting<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Supports fast querying<br>
+&nbsp;&nbsp;&nbsp;&nbsp;➤Used by analysts and business users<br>
+
 
 
 
