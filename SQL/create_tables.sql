@@ -1,3 +1,6 @@
+
+COMMENT#-> IT IS A SOURCE CODE OF TABLE WHICH WE CREATE IN sql DATABASE.
+
 DROP TABLE IF EXISTS source_car_data;
 CREATE TABLE source_car_data (
     Branch_ID      VARCHAR(200),
@@ -14,11 +17,13 @@ CREATE TABLE source_car_data (
     Product_Name   VARCHAR(200)
 );
 
-SELECT * FROM source_car_data
+COMMENT#->IT IS SELECT STATMENT FOR SELECT TO SEE ALL THE DATA.
 
-SELECT MIN(Date_ID) FROM source_car_data
+SELECT * FROM source_car_data;
 
+SELECT MIN(Date_ID) FROM source_car_data;
 
+COMMENT#-> IT IS A WATER  TABLE FOR UPDATE LASTLOAD  FROM THE LASTEST DATA
 CREATE TABLE water_table
 (
     Last_load  VARCHAR(200),
