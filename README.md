@@ -65,10 +65,7 @@ This pipeline implements a **watermark-based incremental loading strategy** usin
 #### Query Logic:
 
 ```sql
-SELECT *
-FROM source_table
-WHERE last_updated > @last_load_time
-  AND last_updated <= @current_load_time
+select * from source_car_data where Date_ID > '@{activity('Last_load').output.value[0].last_load}' AND Date_ID <= '@{activity('Current_load').output.value[0].max_date}'
 ```
 
 * Loads only incremental data into the Bronze layer in ADLS Gen2.
