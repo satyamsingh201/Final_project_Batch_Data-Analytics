@@ -51,7 +51,7 @@ This pipeline implements a **watermark-based incremental loading strategy** usin
 ### 🔸1: Lookup Activity (Last Load) 
 
 
-* Fetches the **last successful load timestamp** (`last_load_time`) from the control (watermark) table in SQL Server. <img src="images/Main_Pipeline.png" width="600" align="right"/>
+* Fetches the **last successful load timestamp** (`last_load_time`) from the control (watermark) table in SQL Server. <img src="images/Screenshot 2026-04-19 123028.png" width="600" align="right"/>
 * This value represents the previous pipeline execution point.
 
 
@@ -80,6 +80,8 @@ select * from source_car_data
 * Loads only incremental data into the Bronze layer in ADLS Gen2.
 
 ### 🔸4: Stored Procedure Activity
+
+<img src="images/Main_Pipeline.png" width="500" height="400"/><img src="images/Main_Pipeline.png" width="500" height="500"/>
 
 * Updates the control (watermark) table with the new `current_load_time`.
 * Ensures the next pipeline run continues from the correct point.
