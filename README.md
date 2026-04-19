@@ -106,6 +106,9 @@ select * from source_car_data
 
 This pipeline implements a range-based incremental loading approach using a watermark mechanism to efficiently process only new or updated data.
 
+<img src="images/Incremental Load Strategy.png" width="800" height="300"/>
+
+
 ### 📌 Concept:
 &nbsp;&nbsp;&nbsp;&nbsp;1.last_load_time → Represents the start of the data window (last successful pipeline run)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;2.current_load_time → Represents the end of the data window (latest available data in source)<br>
