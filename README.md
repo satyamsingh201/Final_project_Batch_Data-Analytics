@@ -27,6 +27,8 @@ The project uses two Azure Data Factory pipelines to implement an incremental da
 ## 1. resource_prep_pipeline (Data Ingestion Pipeline)🔄
 This pipeline is responsible for extracting raw data from GitHub and loading it into SQL Server, which acts as a staging layer.
 
+<img src="images/prep_pipeline.png" width="800" height="300"/>
+
 ### Activities Used:
 &nbsp;&nbsp;&nbsp;🔸Copy Activity <br>
 ### ⚙️ Workflow:<br> 
@@ -42,12 +44,16 @@ This pipeline is responsible for extracting raw data from GitHub and loading it 
 
 This pipeline implements a **watermark-based incremental loading strategy** using two Lookup activities to track previous and current load states.
 
+<img src="images/Main_Pipeline.png" width="800" height="300"/>
+
 ### Activities Used:<br>
 
-### 🔸1: Lookup Activity (Last Load)
+### 🔸1: Lookup Activity (Last Load) 
 
-* Fetches the **last successful load timestamp** (`last_load_time`) from the control (watermark) table in SQL Server.
+
+* Fetches the **last successful load timestamp** (`last_load_time`) from the control (watermark) table in SQL Server. <img src="images/Main_Pipeline.png" width="600" align="right"/>
 * This value represents the previous pipeline execution point.
+
 
 
 ### 🔸2: Lookup Activity (Current Load)
