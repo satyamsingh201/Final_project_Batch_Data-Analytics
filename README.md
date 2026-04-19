@@ -81,7 +81,7 @@ select * from source_car_data
 
 ### 🔸4: Stored Procedure Activity
 
-<img src="images/Main_Pipeline.png" width="500" height="400"/><img src="images/Main_Pipeline.png" width="500" height="500"/>
+<img src="images/stored_pro.png" width="500" height="400"/><img src="images/stored_pro_code.png" width="500" height="500"/>
 
 * Updates the control (watermark) table with the new `current_load_time`.
 * Ensures the next pipeline run continues from the correct point.
