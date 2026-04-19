@@ -17,8 +17,7 @@ This project implements an end-to-end data engineering pipeline using Azure serv
 
 GitHub → ADF → SQL Server → ADF → ADLS (Bronze) → Databricks → Silver → Gold
 
-![architecture.png.png](https://github.com/satyamsingh201/Final_project_Batch_Data-Analytics/blob/main/images/architecture.png.png)
-
+<img src="images/architecture.png.png" width="350" height="450">
 ---
 
 ## PIPELINES
