@@ -1,0 +1,30 @@
+{
+    "name": "DS_Github",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "LS_GitHub_Adf",
+            "type": "LinkedServiceReference"
+        },
+        "parameters": {
+            "F_name": {
+                "type": "string"
+            }
+        },
+        "annotations": [],
+        "type": "DelimitedText",
+        "typeProperties": {
+            "location": {
+                "type": "HttpServerLocation",
+                "relativeUrl": {
+                    "value": "satyamsingh201/Final_project_Batch_Data-Analytics/refs/heads/main/data/@{dataset().F_name}",
+                    "type": "Expression"
+                }
+            },
+            "columnDelimiter": ",",
+            "escapeChar": "\\",
+            "firstRowAsHeader": true,
+            "quoteChar": "\""
+        },
+        "schema": []
+    }
+}

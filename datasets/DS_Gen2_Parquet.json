@@ -1,0 +1,20 @@
+{
+    "name": "DS_Gen2_Parquet",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "LS_DataLakeStorage",
+            "type": "LinkedServiceReference"
+        },
+        "annotations": [],
+        "type": "Parquet",
+        "typeProperties": {
+            "location": {
+                "type": "AzureBlobFSLocation",
+                "folderPath": "row_data",
+                "fileSystem": "bronze"
+            },
+            "compressionCodec": "snappy"
+        },
+        "schema": []
+    }
+}
